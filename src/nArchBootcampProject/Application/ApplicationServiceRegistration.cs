@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
@@ -19,6 +19,14 @@ using NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection;
 using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
+using Application.Services.Applications;
+using Application.Services.ApplicationStates;
+using Application.Services.BlackLists;
+using Application.Services.Bootcamps;
+using Application.Services.BootcampStates;
+using Application.Services.Applicants;
+using Application.Services.Employees;
+using Application.Services.Instructors;
 
 namespace Application;
 
@@ -59,6 +67,14 @@ public static class ApplicationServiceRegistration
 
         services.AddSecurityServices<Guid, int>();
 
+        services.AddScoped<IApplicationService, ApplicationManager>();
+        services.AddScoped<IApplicationStateService, ApplicationStateManager>();
+        services.AddScoped<IBlackListService, BlackListManager>();
+        services.AddScoped<IBootcampService, BootcampManager>();
+        services.AddScoped<IBootcampStateService, BootcampStateManager>();
+        services.AddScoped<IApplicantService, ApplicantManager>();
+        services.AddScoped<IEmployeeService, EmployeeManager>();
+        services.AddScoped<IInstructorService, InstructorManager>();
         return services;
     }
 
