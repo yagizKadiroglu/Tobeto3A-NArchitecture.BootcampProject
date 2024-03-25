@@ -23,7 +23,6 @@ public class CreateInstructorCommand
     public DateTime DateOfBirth { get; set; }
     public string NationalIdentity { get; set; }
     public string Email { get; set; }
-    public AuthenticatorType AuthenticatorType { get; set; }
     public string CompanyName { get; set; }
 
     public string[] Roles => [Admin, Write, InstructorsOperationClaims.Create];

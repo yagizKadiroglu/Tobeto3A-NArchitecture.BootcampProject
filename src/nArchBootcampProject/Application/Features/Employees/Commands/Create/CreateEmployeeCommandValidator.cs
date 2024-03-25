@@ -12,7 +12,6 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
         RuleFor(c => c.DateOfBirth).NotEmpty();
         RuleFor(c => c.NationalIdentity).NotEmpty();
         RuleFor(c => c.Email).NotEmpty();
-        RuleFor(c => c.AuthenticatorType).NotEmpty();
         RuleFor(c => c.Position).NotEmpty();
     }
 }

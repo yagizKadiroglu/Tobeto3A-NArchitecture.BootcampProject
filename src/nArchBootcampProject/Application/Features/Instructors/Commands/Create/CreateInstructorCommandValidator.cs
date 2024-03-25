@@ -12,7 +12,6 @@ public class CreateInstructorCommandValidator : AbstractValidator<CreateInstruct
         RuleFor(c => c.DateOfBirth).NotEmpty();
         RuleFor(c => c.NationalIdentity).NotEmpty();
         RuleFor(c => c.Email).NotEmpty();
-        RuleFor(c => c.AuthenticatorType).NotEmpty();
         RuleFor(c => c.CompanyName).NotEmpty();
     }
 }
