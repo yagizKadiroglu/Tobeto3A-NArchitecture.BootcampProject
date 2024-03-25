@@ -52,9 +52,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 {
                     Id = AdminId,
                     Email = "yagiz@yagiz.com",
-                    FirstName ="Yağız",
-                    LastName ="Kadiropğlu",
-                    Username ="yagiz",
+                    FirstName = "Yağız",
+                    LastName = "Kadiropğlu",
+                    Username = "yagiz",
                     NationalIdentity = "55555555555",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt

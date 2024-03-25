@@ -2,8 +2,6 @@
 
 namespace Domain.Entities;
 
-
-
 public class Bootcamp : Entity<Guid>
 {
     public string Name { get; set; }
@@ -11,7 +9,6 @@ public class Bootcamp : Entity<Guid>
     public Guid BootcampStateId { get; set; }
     public DateTime StarDate { get; set; }
     public DateTime EndDate { get; set; }
-
 
     public virtual Instructor Instructor { get; set; }
     public virtual BootcampState BootcampState { get; set; }
@@ -23,7 +20,8 @@ public class Bootcamp : Entity<Guid>
         Applications = new HashSet<Application>();
     }
 
-    public Bootcamp(Guid id,string name, Guid instructorId, Guid bootcampStateId, DateTime starDate, DateTime endDate):this()
+    public Bootcamp(Guid id, string name, Guid instructorId, Guid bootcampStateId, DateTime starDate, DateTime endDate)
+        : this()
     {
         Id = id;
         Name = name;

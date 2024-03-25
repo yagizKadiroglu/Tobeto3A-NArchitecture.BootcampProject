@@ -4,15 +4,19 @@ using Application.Features.Instructors.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
-using MediatR;
 using static Application.Features.Instructors.Constants.InstructorsOperationClaims;
 
 namespace Application.Features.Instructors.Commands.Delete;
 
-public class DeleteInstructorCommand : IRequest<DeletedInstructorResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest
+public class DeleteInstructorCommand
+    : IRequest<DeletedInstructorResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest
 {
     public Guid Id { get; set; }
 
@@ -28,8 +32,11 @@ public class DeleteInstructorCommand : IRequest<DeletedInstructorResponse>, ISec
         private readonly IInstructorRepository _instructorRepository;
         private readonly InstructorBusinessRules _instructorBusinessRules;
 
-        public DeleteInstructorCommandHandler(IMapper mapper, IInstructorRepository instructorRepository,
-                                         InstructorBusinessRules instructorBusinessRules)
+        public DeleteInstructorCommandHandler(
+            IMapper mapper,
+            IInstructorRepository instructorRepository,
+            InstructorBusinessRules instructorBusinessRules
+        )
         {
             _mapper = mapper;
             _instructorRepository = instructorRepository;
@@ -38,7 +45,10 @@ public class DeleteInstructorCommand : IRequest<DeletedInstructorResponse>, ISec
 
         public async Task<DeletedInstructorResponse> Handle(DeleteInstructorCommand request, CancellationToken cancellationToken)
         {
-            Instructor? instructor = await _instructorRepository.GetAsync(predicate: i => i.Id == request.Id, cancellationToken: cancellationToken);
+            Instructor? instructor = await _instructorRepository.GetAsync(
+                predicate: i => i.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _instructorBusinessRules.InstructorShouldExistWhenSelected(instructor);
 
             await _instructorRepository.DeleteAsync(instructor!);

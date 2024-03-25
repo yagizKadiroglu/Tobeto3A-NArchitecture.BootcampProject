@@ -18,7 +18,6 @@ public class ApplicationStateConfiguration : IEntityTypeConfiguration<Applicatio
 
         builder.HasMany(x => x.Applications);
 
-
         builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
     }
 }

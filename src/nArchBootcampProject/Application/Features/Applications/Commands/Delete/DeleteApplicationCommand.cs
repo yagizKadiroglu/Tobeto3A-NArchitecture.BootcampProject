@@ -10,7 +10,11 @@ using static Application.Features.Applications.Constants.ApplicationsOperationCl
 
 namespace Application.Features.Applications.Commands.Delete;
 
-public class DeleteApplicationCommand : IRequest<DeletedApplicationResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest
+public class DeleteApplicationCommand
+    : IRequest<DeletedApplicationResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest
 {
     public Guid Id { get; set; }
 
@@ -26,17 +30,26 @@ public class DeleteApplicationCommand : IRequest<DeletedApplicationResponse>, IS
         private readonly IApplicationRepository _applicationRepository;
         private readonly ApplicationBusinessRules _applicationBusinessRules;
 
-        public DeleteApplicationCommandHandler(IMapper mapper, IApplicationRepository applicationRepository,
-                                         ApplicationBusinessRules applicationBusinessRules)
+        public DeleteApplicationCommandHandler(
+            IMapper mapper,
+            IApplicationRepository applicationRepository,
+            ApplicationBusinessRules applicationBusinessRules
+        )
         {
             _mapper = mapper;
             _applicationRepository = applicationRepository;
             _applicationBusinessRules = applicationBusinessRules;
         }
 
-        public async Task<DeletedApplicationResponse> Handle(DeleteApplicationCommand request, CancellationToken cancellationToken)
+        public async Task<DeletedApplicationResponse> Handle(
+            DeleteApplicationCommand request,
+            CancellationToken cancellationToken
+        )
         {
-            Domain.Entities.Application? application = await _applicationRepository.GetAsync(predicate: a => a.Id == request.Id, cancellationToken: cancellationToken);
+            Domain.Entities.Application? application = await _applicationRepository.GetAsync(
+                predicate: a => a.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _applicationBusinessRules.ApplicationShouldExistWhenSelected(application);
 
             await _applicationRepository.DeleteAsync(application!);

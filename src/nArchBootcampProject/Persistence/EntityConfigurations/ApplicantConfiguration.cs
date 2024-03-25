@@ -10,11 +10,9 @@ public class ApplicantConfiguration : IEntityTypeConfiguration<Applicant>
     {
         builder.ToTable("Applicants");
 
-
         builder.Property(x => x.About).HasColumnName("About");
 
         builder.HasMany(x => x.Applications);
         builder.HasOne(x => x.BlackList);
-
     }
 }

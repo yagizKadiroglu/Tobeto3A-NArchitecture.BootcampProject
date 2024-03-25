@@ -4,10 +4,10 @@ using Application.Features.Applicants.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
-using MediatR;
 using static Application.Features.Applicants.Constants.ApplicantsOperationClaims;
 
 namespace Application.Features.Applicants.Commands.Delete;
@@ -28,8 +28,11 @@ public class DeleteApplicantCommand : IRequest<DeletedApplicantResponse>, ISecur
         private readonly IApplicantRepository _applicantRepository;
         private readonly ApplicantBusinessRules _applicantBusinessRules;
 
-        public DeleteApplicantCommandHandler(IMapper mapper, IApplicantRepository applicantRepository,
-                                         ApplicantBusinessRules applicantBusinessRules)
+        public DeleteApplicantCommandHandler(
+            IMapper mapper,
+            IApplicantRepository applicantRepository,
+            ApplicantBusinessRules applicantBusinessRules
+        )
         {
             _mapper = mapper;
             _applicantRepository = applicantRepository;
@@ -38,7 +41,10 @@ public class DeleteApplicantCommand : IRequest<DeletedApplicantResponse>, ISecur
 
         public async Task<DeletedApplicantResponse> Handle(DeleteApplicantCommand request, CancellationToken cancellationToken)
         {
-            Applicant? applicant = await _applicantRepository.GetAsync(predicate: a => a.Id == request.Id, cancellationToken: cancellationToken);
+            Applicant? applicant = await _applicantRepository.GetAsync(
+                predicate: a => a.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _applicantBusinessRules.ApplicantShouldExistWhenSelected(applicant);
 
             await _applicantRepository.DeleteAsync(applicant!);

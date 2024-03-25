@@ -3,10 +3,10 @@ using Application.Features.BlackLists.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
-using MediatR;
 using static Application.Features.BlackLists.Constants.BlackListsOperationClaims;
 
 namespace Application.Features.BlackLists.Commands.Update;
@@ -31,8 +31,11 @@ public class UpdateBlackListCommand : IRequest<UpdatedBlackListResponse>, ISecur
         private readonly IBlackListRepository _blackListRepository;
         private readonly BlackListBusinessRules _blackListBusinessRules;
 
-        public UpdateBlackListCommandHandler(IMapper mapper, IBlackListRepository blackListRepository,
-                                         BlackListBusinessRules blackListBusinessRules)
+        public UpdateBlackListCommandHandler(
+            IMapper mapper,
+            IBlackListRepository blackListRepository,
+            BlackListBusinessRules blackListBusinessRules
+        )
         {
             _mapper = mapper;
             _blackListRepository = blackListRepository;
@@ -41,7 +44,10 @@ public class UpdateBlackListCommand : IRequest<UpdatedBlackListResponse>, ISecur
 
         public async Task<UpdatedBlackListResponse> Handle(UpdateBlackListCommand request, CancellationToken cancellationToken)
         {
-            BlackList? blackList = await _blackListRepository.GetAsync(predicate: bl => bl.Id == request.Id, cancellationToken: cancellationToken);
+            BlackList? blackList = await _blackListRepository.GetAsync(
+                predicate: bl => bl.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _blackListBusinessRules.BlackListShouldExistWhenSelected(blackList);
             blackList = _mapper.Map(request, blackList);
 

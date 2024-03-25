@@ -1,5 +1,4 @@
-﻿
-using NArchitecture.Core.Persistence.Repositories;
+﻿using NArchitecture.Core.Persistence.Repositories;
 using NArchitecture.Core.Security.Enums;
 
 namespace Domain.Entities;
@@ -16,7 +15,20 @@ public class Applicant : User
         Applications = new HashSet<Application>();
     }
 
-    public Applicant(Guid id, string username, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, byte[] passwordHash, byte[] passwordSalt, string about, AuthenticatorType authenticatorType) : this()
+    public Applicant(
+        Guid id,
+        string username,
+        string firstName,
+        string lastName,
+        DateTime dateOfBirth,
+        string nationalIdentity,
+        string email,
+        byte[] passwordHash,
+        byte[] passwordSalt,
+        string about,
+        AuthenticatorType authenticatorType
+    )
+        : this()
     {
         Id = id;
         Username = username;
@@ -30,5 +42,4 @@ public class Applicant : User
         AuthenticatorType = authenticatorType;
         About = about;
     }
-
 }

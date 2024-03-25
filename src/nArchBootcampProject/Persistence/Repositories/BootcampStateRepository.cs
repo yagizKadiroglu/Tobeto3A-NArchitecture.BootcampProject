@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class BootcampStateRepository : EfRepositoryBase<BootcampState, Guid, BaseDbContext>, IBootcampStateRepository
 {
-    public BootcampStateRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public BootcampStateRepository(BaseDbContext context)
+        : base(context) { }
 }

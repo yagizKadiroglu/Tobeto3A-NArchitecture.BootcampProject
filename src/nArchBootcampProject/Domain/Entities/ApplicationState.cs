@@ -13,7 +13,8 @@ public class ApplicationState : Entity<Guid>
         Applications = new HashSet<Application>();
     }
 
-    public ApplicationState(Guid id,string name):this()
+    public ApplicationState(Guid id, string name)
+        : this()
     {
         Id = id;
         Name = name;

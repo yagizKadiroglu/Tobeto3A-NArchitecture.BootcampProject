@@ -3,15 +3,19 @@ using Application.Features.Applications.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
-using MediatR;
 using static Application.Features.Applications.Constants.ApplicationsOperationClaims;
 
 namespace Application.Features.Applications.Commands.Create;
 
-public class CreateApplicationCommand : IRequest<CreatedApplicationResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest
+public class CreateApplicationCommand
+    : IRequest<CreatedApplicationResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest
 {
     public Guid ApplicantId { get; set; }
     public Guid BootcampId { get; set; }
@@ -29,15 +33,21 @@ public class CreateApplicationCommand : IRequest<CreatedApplicationResponse>, IS
         private readonly IApplicationRepository _applicationRepository;
         private readonly ApplicationBusinessRules _applicationBusinessRules;
 
-        public CreateApplicationCommandHandler(IMapper mapper, IApplicationRepository applicationRepository,
-                                         ApplicationBusinessRules applicationBusinessRules)
+        public CreateApplicationCommandHandler(
+            IMapper mapper,
+            IApplicationRepository applicationRepository,
+            ApplicationBusinessRules applicationBusinessRules
+        )
         {
             _mapper = mapper;
             _applicationRepository = applicationRepository;
             _applicationBusinessRules = applicationBusinessRules;
         }
 
-        public async Task<CreatedApplicationResponse> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
+        public async Task<CreatedApplicationResponse> Handle(
+            CreateApplicationCommand request,
+            CancellationToken cancellationToken
+        )
         {
             Domain.Entities.Application application = _mapper.Map<Domain.Entities.Application>(request);
 

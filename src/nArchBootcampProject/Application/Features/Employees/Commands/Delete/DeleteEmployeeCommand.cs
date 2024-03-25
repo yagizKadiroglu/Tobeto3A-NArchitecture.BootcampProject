@@ -4,10 +4,10 @@ using Application.Features.Employees.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
-using MediatR;
 using static Application.Features.Employees.Constants.EmployeesOperationClaims;
 
 namespace Application.Features.Employees.Commands.Delete;
@@ -28,8 +28,11 @@ public class DeleteEmployeeCommand : IRequest<DeletedEmployeeResponse>, ISecured
         private readonly IEmployeeRepository _employeeRepository;
         private readonly EmployeeBusinessRules _employeeBusinessRules;
 
-        public DeleteEmployeeCommandHandler(IMapper mapper, IEmployeeRepository employeeRepository,
-                                         EmployeeBusinessRules employeeBusinessRules)
+        public DeleteEmployeeCommandHandler(
+            IMapper mapper,
+            IEmployeeRepository employeeRepository,
+            EmployeeBusinessRules employeeBusinessRules
+        )
         {
             _mapper = mapper;
             _employeeRepository = employeeRepository;
@@ -38,7 +41,10 @@ public class DeleteEmployeeCommand : IRequest<DeletedEmployeeResponse>, ISecured
 
         public async Task<DeletedEmployeeResponse> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
-            Employee? employee = await _employeeRepository.GetAsync(predicate: e => e.Id == request.Id, cancellationToken: cancellationToken);
+            Employee? employee = await _employeeRepository.GetAsync(
+                predicate: e => e.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _employeeBusinessRules.EmployeeShouldExistWhenSelected(employee);
 
             await _employeeRepository.DeleteAsync(employee!);

@@ -3,10 +3,10 @@ using Application.Features.BlackLists.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
-using MediatR;
 using static Application.Features.BlackLists.Constants.BlackListsOperationClaims;
 
 namespace Application.Features.BlackLists.Commands.Create;
@@ -30,8 +30,11 @@ public class CreateBlackListCommand : IRequest<CreatedBlackListResponse>, ISecur
         private readonly IBlackListRepository _blackListRepository;
         private readonly BlackListBusinessRules _blackListBusinessRules;
 
-        public CreateBlackListCommandHandler(IMapper mapper, IBlackListRepository blackListRepository,
-                                         BlackListBusinessRules blackListBusinessRules)
+        public CreateBlackListCommandHandler(
+            IMapper mapper,
+            IBlackListRepository blackListRepository,
+            BlackListBusinessRules blackListBusinessRules
+        )
         {
             _mapper = mapper;
             _blackListRepository = blackListRepository;

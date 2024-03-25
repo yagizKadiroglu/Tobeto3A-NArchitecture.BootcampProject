@@ -2,17 +2,13 @@
 
 namespace Domain.Entities;
 
-
-public class UserImage:Entity<Guid>
+public class UserImage : Entity<Guid>
 {
     public Guid UserId { get; set; }
     public string ImagePath { get; set; }
 
+    public UserImage() { }
 
-    public UserImage()
-    {
-        
-    }
     public UserImage(Guid id, Guid userId, string imagePath)
     {
         Id = id;

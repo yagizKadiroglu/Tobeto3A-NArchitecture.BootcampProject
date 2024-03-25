@@ -2,8 +2,6 @@
 
 namespace Domain.Entities;
 
-
-
 public class BootcampState : Entity<Guid>
 {
     public string Name { get; set; }
@@ -15,7 +13,8 @@ public class BootcampState : Entity<Guid>
         Bootcamps = new HashSet<Bootcamp>();
     }
 
-    public BootcampState(Guid id,string name):this()
+    public BootcampState(Guid id, string name)
+        : this()
     {
         Id = id;
         Name = name;

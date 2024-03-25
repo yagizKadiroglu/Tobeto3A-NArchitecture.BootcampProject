@@ -3,10 +3,10 @@ using Application.Features.Employees.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
-using MediatR;
 using static Application.Features.Employees.Constants.EmployeesOperationClaims;
 
 namespace Application.Features.Employees.Commands.Create;
@@ -34,8 +34,11 @@ public class CreateEmployeeCommand : IRequest<CreatedEmployeeResponse>, ISecured
         private readonly IEmployeeRepository _employeeRepository;
         private readonly EmployeeBusinessRules _employeeBusinessRules;
 
-        public CreateEmployeeCommandHandler(IMapper mapper, IEmployeeRepository employeeRepository,
-                                         EmployeeBusinessRules employeeBusinessRules)
+        public CreateEmployeeCommandHandler(
+            IMapper mapper,
+            IEmployeeRepository employeeRepository,
+            EmployeeBusinessRules employeeBusinessRules
+        )
         {
             _mapper = mapper;
             _employeeRepository = employeeRepository;
