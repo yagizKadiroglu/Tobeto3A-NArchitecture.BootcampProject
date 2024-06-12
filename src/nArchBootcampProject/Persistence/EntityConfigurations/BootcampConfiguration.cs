@@ -14,8 +14,10 @@ public class BootcampConfiguration : IEntityTypeConfiguration<Bootcamp>
         builder.Property(b => b.Name).HasColumnName("Name");
         builder.Property(b => b.InstructorId).HasColumnName("InstructorId");
         builder.Property(b => b.BootcampStateId).HasColumnName("BootcampStateId");
-        builder.Property(b => b.StarDate).HasColumnName("StarDate");
+        builder.Property(b => b.StartDate).HasColumnName("StarDate");
         builder.Property(b => b.EndDate).HasColumnName("EndDate");
+        builder.Property(b => b.ImagePath).HasColumnName("ImagePath");
+
         builder.Property(b => b.CreatedDate).HasColumnName("CreatedDate").IsRequired();
         builder.Property(b => b.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(b => b.DeletedDate).HasColumnName("DeletedDate");

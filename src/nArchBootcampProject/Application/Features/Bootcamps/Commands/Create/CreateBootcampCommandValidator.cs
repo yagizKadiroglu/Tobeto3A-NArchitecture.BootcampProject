@@ -9,7 +9,7 @@ public class CreateBootcampCommandValidator : AbstractValidator<CreateBootcampCo
         RuleFor(c => c.Name).NotEmpty();
         RuleFor(c => c.InstructorId).NotEmpty();
         RuleFor(c => c.BootcampStateId).NotEmpty();
-        RuleFor(c => c.StarDate).NotEmpty();
+        RuleFor(c => c.StartDate).NotEmpty();
         RuleFor(c => c.EndDate).NotEmpty();
     }
 }

@@ -1,6 +1,7 @@
 using Application.Features.Bootcamps.Constants;
 using Application.Features.Bootcamps.Constants;
 using Application.Features.Bootcamps.Rules;
+using Application.Services.ImageService;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -12,7 +13,7 @@ using static Application.Features.Bootcamps.Constants.BootcampsOperationClaims;
 
 namespace Application.Features.Bootcamps.Commands.Delete;
 
-public class DeleteBootcampCommand : IRequest<DeletedBootcampResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest
+public class DeleteBootcampCommand : IRequest<DeletedBootcampResponse>, ICacheRemoverRequest, ILoggableRequest
 {
     public Guid Id { get; set; }
 
@@ -27,16 +28,19 @@ public class DeleteBootcampCommand : IRequest<DeletedBootcampResponse>, ISecured
         private readonly IMapper _mapper;
         private readonly IBootcampRepository _bootcampRepository;
         private readonly BootcampBusinessRules _bootcampBusinessRules;
+        private readonly ImageServiceBase _imageServiceAdapter;
 
         public DeleteBootcampCommandHandler(
             IMapper mapper,
             IBootcampRepository bootcampRepository,
             BootcampBusinessRules bootcampBusinessRules
-        )
+,
+            ImageServiceBase imageServiceAdapter)
         {
             _mapper = mapper;
             _bootcampRepository = bootcampRepository;
             _bootcampBusinessRules = bootcampBusinessRules;
+            _imageServiceAdapter = imageServiceAdapter;
         }
 
         public async Task<DeletedBootcampResponse> Handle(DeleteBootcampCommand request, CancellationToken cancellationToken)
@@ -47,6 +51,7 @@ public class DeleteBootcampCommand : IRequest<DeletedBootcampResponse>, ISecured
             );
             await _bootcampBusinessRules.BootcampShouldExistWhenSelected(bootcamp);
 
+            await _imageServiceAdapter.DeleteAsync(bootcamp!.ImagePath);
             await _bootcampRepository.DeleteAsync(bootcamp!);
 
             DeletedBootcampResponse response = _mapper.Map<DeletedBootcampResponse>(bootcamp);

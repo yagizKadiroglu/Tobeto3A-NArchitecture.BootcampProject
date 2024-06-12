@@ -95,6 +95,16 @@ if (app.Environment.IsDevelopment())
 
 if (app.Environment.IsProduction())
     app.ConfigureCustomExceptionMiddleware();
+app.UseCors(builder =>
+{
+    builder
+        .WithOrigins("http://localhost:4200", "http://localhost:60805")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+});
+
+app.UseRouting();
 
 app.UseDbMigrationApplier();
 

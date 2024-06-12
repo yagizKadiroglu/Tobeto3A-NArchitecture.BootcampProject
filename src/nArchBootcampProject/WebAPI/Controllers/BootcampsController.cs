@@ -14,7 +14,7 @@ namespace WebAPI.Controllers;
 public class BootcampsController : BaseController
 {
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] CreateBootcampCommand createBootcampCommand)
+    public async Task<IActionResult> Add([FromForm] CreateBootcampCommand createBootcampCommand)
     {
         CreatedBootcampResponse response = await Mediator.Send(createBootcampCommand);
 
@@ -22,7 +22,7 @@ public class BootcampsController : BaseController
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateBootcampCommand updateBootcampCommand)
+    public async Task<IActionResult> Update([FromForm] UpdateBootcampCommand updateBootcampCommand)
     {
         UpdatedBootcampResponse response = await Mediator.Send(updateBootcampCommand);
 
